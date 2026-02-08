@@ -14,8 +14,6 @@ public class RegisterRequest {
     @Size(min=2, max=120)
     private String lastname;
 
-    @NotBlank
-    @Size(min=2, max=120)
     private String middlename;
 
     @NotBlank
