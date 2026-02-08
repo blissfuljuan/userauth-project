@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">UserAuth</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="fill_your_details">Fill in your details</string>
+    <string name="no_account_create_one">No account? Create one</string>
+    <string name="login_to_continue">Login to continue</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="agree_to_terms">I agree to the Terms and Conditions</string>
+    <string name="loading">Loading…</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="you_are_logged_in">You are logged in.</string>
+    <string name="token">Token: (hidden)</string>
+    <string name="logout">Logout</string>
+</resources>
