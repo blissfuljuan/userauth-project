@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc"
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import {
@@ -11,6 +12,8 @@ import {
 import { Input } from "./ui/input";
 import { useState, type SubmitEvent } from "react";
 import { useUser } from "@/context/UserContext";
+
+const googleOAuth2URL = import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_GOOGLE_OAUTH2_URL;
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -30,6 +33,10 @@ export function LoginForm() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href=googleOAuth2URL
   };
 
   return (
@@ -70,6 +77,27 @@ export function LoginForm() {
             {loading ? "Logging in..." : "Login"}
           </Button>
         </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        {/* Google Button */}
+        <Button
+          variant="outline"
+          className="w-full flex items-center gap-2"
+          onClick={handleGoogleLogin}
+        >
+          <FcGoogle size={18} />
+          Continue with Google
+        </Button>
       </CardContent>
     </Card>
   );
