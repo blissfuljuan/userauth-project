@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Table(name="users", uniqueConstraints = {
         @UniqueConstraint(name = "uk_users_email", columnNames = "email")
 })
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -42,6 +43,23 @@ public class User {
     @Column(name="updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    public User(String firstname, String lastname, String email, String password, UserRole role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String firstname, String lastname, String middlename, String email, String password, UserRole role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.middlename = middlename;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     @PrePersist
     public void onCreate() {
         LocalDateTime now = LocalDateTime.now();
@@ -62,15 +80,6 @@ public class User {
     }
 
     public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public User(String firstname, String lastname, String middlename, String email, String password, UserRole role) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.middlename = middlename;
-        this.email = email;
-        this.password = password;
         this.role = role;
     }
 
