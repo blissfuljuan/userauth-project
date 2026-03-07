@@ -11,8 +11,21 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            scope:
+              - openid
+              - profile
+              - email
 
 app:
   jwt:
-    secret: 385f6b142deff2863b9deedcdac00a37
+    secret: ${JWT_SECRET}
     expiration-ms: 3600000
+
+frontend-url: ${FRONTEND_URL:http://localhost:5173}

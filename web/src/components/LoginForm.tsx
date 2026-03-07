@@ -13,7 +13,8 @@ import { Input } from "./ui/input";
 import { useState, type SubmitEvent } from "react";
 import { useUser } from "@/context/UserContext";
 
-const googleOAuth2URL = import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_GOOGLE_OAUTH2_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const googleOAuth2URL =  API_BASE_URL + import.meta.env.VITE_GOOGLE_OAUTH2_URL;
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function LoginForm() {
 
     try {
       await login({ email, password });
-      if (!error) navigate("/dashboard");
+      navigate("/dashboard");
     } finally {
       setLoading(false);
     }
