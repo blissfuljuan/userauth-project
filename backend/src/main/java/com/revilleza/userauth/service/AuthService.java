@@ -7,8 +7,11 @@ import com.revilleza.userauth.model.User;
 import com.revilleza.userauth.model.UserRole;
 import com.revilleza.userauth.repository.UserRepository;
 import com.revilleza.userauth.security.JwtProvider;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -55,7 +58,47 @@ public class AuthService {
         return new AuthResponse(token, "Bearer");
     }
 
+    public AuthResponse authenticateWithGoogleOAuth2User(OAuth2User oAuth2User) {
+        String email = toStringValue(oAuth2User.getAttribute("email")).trim().toLowerCase();
+        if (email.isBlank()) {
+            throw new IllegalArgumentException("Google account email is unavailable.");
+        }
+
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
+            String firstName = toStringValue(oAuth2User.getAttribute("given_name"));
+            if (firstName.isBlank()) {
+                firstName = "Google";
+            }
+
+            String lastName = toStringValue(oAuth2User.getAttribute("family_name"));
+            if (lastName.isBlank()) {
+                lastName = "User";
+            }
+
+            User newUser = new User(
+                    firstName,
+                    lastName,
+                    "",
+                    email,
+                    passwordEncoder.encode(UUID.randomUUID().toString()),
+                    UserRole.USER
+            );
+            return userRepository.save(newUser);
+        });
+
+        if (!user.isActive()) {
+            throw new IllegalArgumentException("Account is disabled.");
+        }
+
+        String token = jwtProvider.generateToken(user);
+        return new AuthResponse(token, "Bearer");
+    }
+
     public void logout() {
 
+    }
+
+    private String toStringValue(Object value) {
+        return value == null ? "" : value.toString();
     }
 }

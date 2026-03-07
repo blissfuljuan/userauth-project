@@ -12,6 +12,8 @@ import { Input } from "./ui/input";
 import { useState, type SubmitEvent } from "react";
 import { useUser } from "@/context/UserContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export function LoginForm() {
   const navigate = useNavigate();
   const { login, error, clearError } = useUser();
@@ -26,10 +28,14 @@ export function LoginForm() {
 
     try {
       await login({ email, password });
-      if (!error) navigate("/dashboard");
+      navigate("/dashboard");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
   };
 
   return (
@@ -70,6 +76,21 @@ export function LoginForm() {
             {loading ? "Logging in..." : "Login"}
           </Button>
         </form>
+
+        <div className="my-4 flex items-center gap-2">
+          <div className="h-px flex-1 bg-border" />
+          <span className="text-xs text-muted-foreground">or</span>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={handleGoogleSignIn}
+        >
+          Continue with Google
+        </Button>
       </CardContent>
     </Card>
   );
