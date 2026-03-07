@@ -1,6 +1,7 @@
 package com.revilleza.userauth.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,9 @@ public class User {
     @Column(name="password", nullable = false, length = 255)
     private String password;
 
+    @Column(name="role")
+    private UserRole role = UserRole.USER;
+
     @Column(name="is_active", nullable = false)
     private boolean active = true;
 
@@ -53,12 +57,21 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastname, String middlename, String email, String password) {
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public User(String firstname, String lastname, String middlename, String email, String password, UserRole role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.middlename = middlename;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {

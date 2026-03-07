@@ -4,6 +4,7 @@ import com.revilleza.userauth.dto.AuthResponse;
 import com.revilleza.userauth.dto.LoginRequest;
 import com.revilleza.userauth.dto.RegisterRequest;
 import com.revilleza.userauth.model.User;
+import com.revilleza.userauth.model.UserRole;
 import com.revilleza.userauth.repository.UserRepository;
 import com.revilleza.userauth.security.JwtProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +30,7 @@ public class AuthService {
         }
 
         String hashed = passwordEncoder.encode(request.getPassword());
-        User user = new User(request.getFirstname(), request.getLastname(), request.getMiddlename(), email, hashed);
+        User user = new User(request.getFirstname(), request.getLastname(), request.getMiddlename(), email, hashed, request.getRole());
 
         return userRepository.save(user);
 

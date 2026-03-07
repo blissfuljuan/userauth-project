@@ -1,5 +1,6 @@
 package com.revilleza.userauth.dto;
 
+import com.revilleza.userauth.model.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,6 +25,16 @@ public class RegisterRequest {
     @NotBlank
     @Size(min=8, max=72)
     private String password;
+
+    private UserRole role;
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
     public RegisterRequest() {
     }

@@ -4,7 +4,9 @@ spring:
   datasource:
     url: ${DATABASE_URL}
     username: ${DB_USERNAME}
-    password: ${DB_PASSSWORD}
+    password: ${DB_PASSWORD}
+  hikari:
+    maximum-pool-size: 10
   jpa:
     hibernate:
       ddl-auto: update

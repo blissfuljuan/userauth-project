@@ -5,14 +5,13 @@ import com.revilleza.userauth.dto.LoginRequest;
 import com.revilleza.userauth.dto.AuthResponse;
 import com.revilleza.userauth.dto.RegisterRequest;
 import com.revilleza.userauth.model.User;
+import com.revilleza.userauth.model.UserRole;
 import com.revilleza.userauth.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,6 +25,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+        request.setRole(UserRole.USER);
         User created = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(true,"User registered successfully. ID=" + created.getId()));
